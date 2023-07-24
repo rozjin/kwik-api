@@ -1,0 +1,164 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id Int @id @default(autoincrement())
+  auth UserAuth?
+  
+  name String @db.VarChar(255)
+
+  blocked Boolean
+  paused Boolean
+
+  email String @unique @db.VarChar(255)
+  email_verified Boolean
+
+  phone_number String @db.VarChar(255)
+  phone_verified Boolean
+
+  picture String? @db.VarChar(255)
+
+  dob DateTime?
+  address UserAddress?
+
+  currency String @db.VarChar(3)
+  country String @db.VarChar(3)
+  balance Float
+
+  mfa_methods String[]
+  backup_mfa_methods String[]
+
+  transfer_codes TransferCode[]
+
+  out_transfers Transfer[] @relation("OutgoingTransfers")
+  in_transfers Transfer[] @relation("IngoingTransfers")
+
+  stripe_connect_id String?
+  stripe_verified Boolean
+
+  stripe_customer_id String?
+  stripe_cards StripeCard[]
+  stripe_sessions StripeSession[]
+}
+
+model StripeCard {
+  id Int @id @default(autoincrement())
+
+  user User @relation(fields: [user_id], references: [id])
+  user_id Int
+
+  stripe_id String @unique
+
+  status StripeCardStatus
+  status_reason String?
+}
+
+enum StripeCardStatus {
+  INIT
+  WAIT
+
+  SUCCESS
+  FAILED
+}
+
+model StripeSession {
+  id Int @id @default(autoincrement())
+
+  user User @relation(fields: [user_id], references: [id])
+  user_id Int
+
+  status StripeSessionStatus
+  status_reason String?
+
+  stripe_id String @unique
+  transfers Transfer[]
+}
+
+enum StripeSessionStatus {
+  WAITING
+  FAILED
+  COMPLETED
+}
+
+model UserAuth {
+  id Int @id @default(autoincrement()) 
+
+  user User @relation(fields: [user_id], references: [id])
+  user_id Int @unique
+
+  password String
+  refreshToken String? @unique
+}
+
+model UserAddress {
+  id Int @id @default(autoincrement())
+
+  user User @relation(fields: [user_id], references: [id])
+  user_id Int @unique
+
+  line String
+  unit String?
+
+  suburb String?
+  city String
+  region String
+
+  postcode String
+}
+
+model TransferCode {
+  id Int @id @default(autoincrement())
+
+  currency String @db.VarChar(3)
+  amount Float
+
+  expire DateTime?
+
+  desc String @db.Text
+
+  user User @relation(fields: [user_id], references: [id])
+  user_id Int
+}
+
+model Transfer {
+  id Int @id @default(autoincrement())
+  friendly_id String @unique @db.VarChar(12)
+
+  status TransferStatus
+  status_reason String?
+
+  currency String @db.VarChar(3)
+  amount Float
+  last_balance Float
+
+  desc String @db.Text
+  date DateTime @default(now())
+
+  from User @relation("OutgoingTransfers", fields: [from_id], references: [id])
+  from_id Int
+  
+  to User @relation("IngoingTransfers", fields: [to_id], references: [id])
+  to_id Int
+
+  session StripeSession @relation(fields: [session_id], references: [id])
+  session_id Int
+
+  stripe_id String
+}
+
+enum TransferStatus {
+  INIT
+  CHARGING
+
+  SUCCESS
+  FAILED
+}
