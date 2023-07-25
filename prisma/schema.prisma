@@ -152,7 +152,7 @@ model Transfer {
   session StripeSession @relation(fields: [session_id], references: [id])
   session_id Int
 
-  stripe_id String
+  stripe_id String @unique
 }
 
 enum TransferStatus {

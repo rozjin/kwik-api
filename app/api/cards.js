@@ -4,7 +4,7 @@ import Stripe from 'stripe';
 import { z } from 'zod';
 
 const prisma = new PrismaClient();
-const stripe = new Stripe('sk_test_Hrs6SAopgFPF0bZXSN3f6ELN');
+const stripe = new Stripe(process.env.STRIPE_KEY);
 export const get = [
     middleware,
     async (req, res) => {
