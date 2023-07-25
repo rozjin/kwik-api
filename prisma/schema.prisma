@@ -43,7 +43,7 @@ model User {
   in_transfers Transfer[] @relation("IngoingTransfers")
 
   stripe_connect_id String?
-  stripe_verified Boolean
+  stripe_verified Boolean?
 
   stripe_customer_id String?
   stripe_cards StripeCard[]
