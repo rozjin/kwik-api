@@ -17,7 +17,7 @@ export const get = [
                         date: true,
                         amount: true,
                         last_balance: true,
-                        accepted: true
+                        status: true
                     }
                 },
 
@@ -26,7 +26,7 @@ export const get = [
                         date: true,
                         amount: true,
                         last_balance: true,
-                        accepted: true
+                        status: true
                     }
                 }
             }
