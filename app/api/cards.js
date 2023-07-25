@@ -82,14 +82,17 @@ export const post = [
             }
         });
 
+        const success_url = "https://api.moirai.nz/api/stripe_success"
+        const cancel_url = "https://api.moirai.nz/api/stripe_failure"
+
         switch(op) {
             case 'new': {
                 const session = await stripe.checkout.sessions.create({
                     payment_method_types: ['card'],
                     mode: 'setup',
                     customer: data.stripe_customer_id,
-                    success_url: req.url,
-                    cancel_url: req.url
+                    success_url: success_url,
+                    cancel_url: cancel_url
                 });
 
                 await prisma.user.update({
