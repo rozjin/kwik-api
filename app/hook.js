@@ -42,14 +42,9 @@ export const post = async(req, res) => {
         break;
       case 'checkout.session.expired':
         const checkoutSessionExpired = event.data.object;
-        await prisma.stripeSession.update({
+        await prisma.stripeSession.delete({
           where: {
-              stripe_id: checkoutSessionCompleted.data.object.id
-          },
-
-          data: {
-              status: StripeSessionStatus.FAILED,
-              status_reason: "expired"
+              stripe_id: checkoutSessionExpired.data.object.id
           }
         });
         // Then define and call a function to handle the event checkout.session.expired
