@@ -13,11 +13,6 @@ class NotFoundError extends Error {
 }
 
 const middleware = [
-    async (req, res, next) => {
-        req.fullUrl = `${req.protocol}://${req.get('host')}${req.originalUrl}`;
-        next();
-    },
-
     async(req, res, next) => {
         next(new NotFoundError("Route not found", 404));
     },
