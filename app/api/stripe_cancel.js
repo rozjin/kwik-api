@@ -18,7 +18,7 @@ export const get = async(req, res) => {
         },
 
         data: {
-            status: StripeSessionStatus.COMPLETED
+            status: StripeSessionStatus.FAILED
         }
     });
 

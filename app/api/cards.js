@@ -76,14 +76,16 @@ export const post = [
             },
 
             select: {
+                email: true,
+
                 stripe_customer_id: true,
                 stripe_connect_id: true,
                 stripe_verified: true
             }
         });
 
-        const success_url = "https://api.moirai.nz/api/stripe_success"
-        const cancel_url = "https://api.moirai.nz/api/stripe_failure"
+        const success_url = `https://api.moirai.nz/api/stripe_success&session_id={CHECKOUT_SESSION_ID}&origin=${req.url}`
+        const cancel_url = `https://api.moirai.nz/api/stripe_cancel&session_id={CHECKOUT_SESSION_ID}&origin=${req.url}`
 
         switch(op) {
             case 'new': {
@@ -92,7 +94,8 @@ export const post = [
                     mode: 'setup',
                     customer: data.stripe_customer_id,
                     success_url: success_url,
-                    cancel_url: cancel_url
+                    cancel_url: cancel_url,
+                    customer_email: data.email
                 });
 
                 await prisma.user.update({
