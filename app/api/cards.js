@@ -90,8 +90,8 @@ export const post = [
             }
         });
 
-        const success_url = `https://api.moirai.nz/api/stripe_success?session_id={CHECKOUT_SESSION_ID}&origin=${req.url}`
-        const cancel_url = `https://api.moirai.nz/api/stripe_cancel?session_id={CHECKOUT_SESSION_ID}&origin=${req.url}`
+        const success_url = `https://api.moirai.nz/api/stripe_success?session_id={CHECKOUT_SESSION_ID}&origin=${req.fullUrl}`
+        const cancel_url = `https://api.moirai.nz/api/stripe_cancel?session_id={CHECKOUT_SESSION_ID}&origin=${req.fullUrl}`
 
         switch(op) {
             case 'new': {

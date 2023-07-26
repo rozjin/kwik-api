@@ -31,8 +31,6 @@ export const get = [
             }
         });
 
-        console.log(data);
-
         return res.json({
             status: "success",
             data: data
