@@ -28,7 +28,7 @@ export const get = [
             const customer = await stripe.customers.create({
                 email: data.email
             });
-            
+
             customer_id = customer.id;
             await prisma.user.update({
                 where: {
@@ -90,8 +90,8 @@ export const post = [
             }
         });
 
-        const success_url = `https://api.moirai.nz/api/stripe_success&session_id={CHECKOUT_SESSION_ID}&origin=${req.url}`
-        const cancel_url = `https://api.moirai.nz/api/stripe_cancel&session_id={CHECKOUT_SESSION_ID}&origin=${req.url}`
+        const success_url = `https://api.moirai.nz/api/stripe_success?session_id={CHECKOUT_SESSION_ID}&origin=${req.url}`
+        const cancel_url = `https://api.moirai.nz/api/stripe_cancel?session_id={CHECKOUT_SESSION_ID}&origin=${req.url}`
 
         switch(op) {
             case 'new': {
