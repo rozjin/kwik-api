@@ -1,6 +1,6 @@
-import { PrismaClient, StripeSessionStatus } from '@prisma/client';
+import { StripeSessionStatus } from '@prisma/client';
+import { prisma } from "../prisma.js";
 
-const prisma = new PrismaClient();
 export const get = async(req, res) => {
     const { session_id, origin } = req.query;
     if (!session_id || !origin) {

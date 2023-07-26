@@ -1,8 +1,8 @@
-import { PrismaClient } from "@prisma/client"
 import { z } from "zod";
 import { default as jwt } from 'jsonwebtoken';
 
-const prisma = new PrismaClient();
+import { prisma } from "../prisma.js";
+
 const Refresh = z.object({
     refreshToken: z.string().nonempty()
 });

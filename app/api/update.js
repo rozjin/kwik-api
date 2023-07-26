@@ -1,9 +1,8 @@
 import { z } from "zod";
 import middleware from "./middleware.js";
-import { PrismaClient } from '@prisma/client';
 import validator from 'validator';
 
-const prisma = new PrismaClient();
+import { prisma } from "../prisma.js";
 
 const User = z.object({
     name: z.string().max(32).nonempty(),

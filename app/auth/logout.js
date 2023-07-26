@@ -1,7 +1,7 @@
-import { PrismaClient } from "@prisma/client"
 import { z } from "zod";
 
-const prisma = new PrismaClient();
+import { prisma } from "../prisma.js";
+
 const Refresh = z.object({
     refreshToken: z.string().nonempty()
 });

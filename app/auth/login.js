@@ -1,15 +1,15 @@
-import { PrismaClient } from '@prisma/client';
 import { z } from 'zod';
 import { default as argon2 } from 'argon2';
 import { default as jwt } from 'jsonwebtoken';
 import crypto from 'crypto';
+
+import { prisma } from "../prisma.js";
 
 const Login = z.object({
     email: z.string().email(),
     password: z.string().max(64).min(12),
 })
 
-const prisma = new PrismaClient();
 export const post = async (req, res) => {
     if (!Login.safeParse(req.body)) {
         res.status(400);

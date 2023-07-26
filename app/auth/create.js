@@ -1,10 +1,11 @@
 import { z } from 'zod';
 import validator from 'validator';
-import { Prisma, PrismaClient } from '@prisma/client';
+import { Prisma } from '@prisma/client';
 import { default as argon2 } from 'argon2';
 
+import { prisma } from "../prisma.js";
+
 const PrismaClientKnownRequestError = Prisma.PrismaClientKnownRequestError;
-const prisma = new PrismaClient();
 const Register = z.object({
     name: z.string().max(32).nonempty(),
     email: z.string().email(),

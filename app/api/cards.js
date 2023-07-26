@@ -1,9 +1,10 @@
 import middleware from './middleware.js';
-import { PrismaClient, StripeSessionStatus } from '@prisma/client';
+import { StripeSessionStatus } from '@prisma/client';
 import Stripe from 'stripe';
 import { z } from 'zod';
 
-const prisma = new PrismaClient();
+import { prisma } from '../prisma.js';
+
 const stripe = new Stripe(process.env.STRIPE_KEY);
 export const get = [
     middleware,

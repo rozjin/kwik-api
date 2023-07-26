@@ -1,7 +1,8 @@
-import { PrismaClient, StripeSessionStatus } from '@prisma/client';
+import { StripeSessionStatus } from '@prisma/client';
 import Stripe from 'stripe';
 
-const prisma = new PrismaClient();
+import { prisma } from './prisma.js';
+
 const stripe = new Stripe('sk_test_Hrs6SAopgFPF0bZXSN3f6ELN');
 const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
 export const post = async(req, res) => {
