@@ -15,6 +15,8 @@ export const get = [
             },
 
             select: {
+                email: true,
+
                 stripe_customer_id: true,
                 stripe_connect_id: true,
                 stripe_verified: true
@@ -23,7 +25,10 @@ export const get = [
 
         let customer_id = data.stripe_customer_id;
         if (customer_id == null) {
-            const customer = await stripe.customers.create();
+            const customer = await stripe.customers.create({
+                email: data.email
+            });
+            
             customer_id = customer.id;
             await prisma.user.update({
                 where: {
@@ -95,8 +100,7 @@ export const post = [
                     mode: 'setup',
                     customer: data.stripe_customer_id,
                     success_url: success_url,
-                    cancel_url: cancel_url,
-                    customer_email: data.email
+                    cancel_url: cancel_url
                 });
 
                 await prisma.user.update({
