@@ -91,9 +91,10 @@ export const post = [
         });
 
 
-        const fullUrl = `${req.protocol}://${req.get('host')}${req.originalUrl}`;
-        const success_url = `https://api.moirai.nz/api/stripe_success?session_id={CHECKOUT_SESSION_ID}&origin=${fullUrl}`
-        const cancel_url = `https://api.moirai.nz/api/stripe_cancel?session_id={CHECKOUT_SESSION_ID}&origin=${fullUrl}`
+        const referer =  req.headers.referrer || req.headers.referer;
+        console.log(referer);
+        const success_url = `https://api.moirai.nz/api/stripe_success?session_id={CHECKOUT_SESSION_ID}&origin=${referer}`
+        const cancel_url = `https://api.moirai.nz/api/stripe_cancel?session_id={CHECKOUT_SESSION_ID}&origin=${referer}`
 
         switch(op) {
             case 'new': {
