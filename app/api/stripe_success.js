@@ -11,7 +11,6 @@ export const get = async(req, res) => {
         })
     }
 
-
     await prisma.stripeSession.update({
         where: {
             stripe_id: session_id

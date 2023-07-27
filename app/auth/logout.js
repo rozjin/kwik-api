@@ -2,12 +2,12 @@ import { z } from "zod";
 
 import { prisma } from "../prisma.js";
 
-const Refresh = z.object({
+const Logout = z.object({
     refreshToken: z.string().nonempty()
 });
 
 export const post = async (req, res) => {
-    if (!Refresh.safeParse(req.body)) {
+    if (!Logout.safeParse(req.body)) {
         res.status(400);
         return res.json({
             status: "error",
