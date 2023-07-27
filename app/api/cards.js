@@ -92,7 +92,6 @@ export const post = [
 
 
         const referer =  req.headers.referrer || req.headers.referer;
-        console.log(referer);
         const success_url = `https://api.moirai.nz/api/stripe_success?session_id={CHECKOUT_SESSION_ID}&origin=${referer}`
         const cancel_url = `https://api.moirai.nz/api/stripe_cancel?session_id={CHECKOUT_SESSION_ID}&origin=${referer}`
 
