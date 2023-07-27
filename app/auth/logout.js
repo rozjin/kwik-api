@@ -21,7 +21,7 @@ export const post = async (req, res) => {
         }
     });
 
-    if (!auth) {
+    if (auth == null) {
         res.status(403);
         return res.json({
             status: "error",
@@ -33,6 +33,10 @@ export const post = async (req, res) => {
 
     await prisma.userAuth.update({
         where: {
+            refreshToken: req.body.refreshToken
+        },
+
+        data: {
             refreshToken: null
         }
     });
