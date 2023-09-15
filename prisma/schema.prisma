@@ -34,6 +34,8 @@ model User {
   country String @db.VarChar(3)
   balance Float
 
+  payees Payee[]
+
   mfa_methods String[]
   backup_mfa_methods String[]
 
@@ -42,32 +44,23 @@ model User {
   out_transfers Transfer[] @relation("OutgoingTransfers")
   in_transfers Transfer[] @relation("IngoingTransfers")
 
-  stripe_connect_id String?
+  stripe_connect_id String? @unique
   stripe_verified Boolean?
 
-  stripe_customer_id String?
-  stripe_cards StripeCard[]
+  stripe_customer_id String? @unique
   stripe_sessions StripeSession[]
 }
 
-model StripeCard {
+model Payee {
   id Int @id @default(autoincrement())
 
   user User @relation(fields: [user_id], references: [id])
   user_id Int
 
-  stripe_id String @unique
+  name String @db.VarChar(255)
+  email String @unique @db.VarChar(255)
 
-  status StripeCardStatus
-  status_reason String?
-}
-
-enum StripeCardStatus {
-  INIT
-  WAIT
-
-  SUCCESS
-  FAILED
+  picture String? @db.VarChar(255)
 }
 
 model StripeSession {
@@ -108,8 +101,7 @@ model UserAddress {
   line String
   unit String?
 
-  suburb String?
-  city String
+  city String?
   region String
 
   postcode String
@@ -149,8 +141,8 @@ model Transfer {
   to User @relation("IngoingTransfers", fields: [to_id], references: [id])
   to_id Int
 
-  session StripeSession @relation(fields: [session_id], references: [id])
-  session_id Int
+  session StripeSession? @relation(fields: [session_id], references: [id])
+  session_id Int?
 
   stripe_id String @unique
 }
