@@ -1,0 +1,28 @@
+# fly.toml app configuration file generated for kwik on 2023-09-15T15:24:20-04:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = "kwik"
+primary_region = "ord"
+console_command = "node dist/index.js"
+
+[deploy]
+release_command = "npx prisma migrate deploy"
+
+[build]
+
+[http_service]
+  internal_port = 5000
+  force_https = true
+  auto_stop_machines = true
+  auto_start_machines = true
+  min_machines_running = 0
+  processes = ["app"]
+
+[[http_service.checks]]
+  grace_period = "10s"
+  interval = "30s"
+  method = "GET"
+  timeout = "5s"
+  path = "/check"

@@ -1,6 +1,8 @@
 import { StripeSessionStatus } from '@prisma/client';
 import Stripe from 'stripe';
 
+import 'stripe-event-types';
+
 import { prisma } from 'kwik/prisma.js';
 
 import { Request, Response } from 'express';
@@ -13,7 +15,6 @@ const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET || "";
 export const post = async(req: Request, res: Response) => {
     let event;
     try {
-      /// <reference types="stripe-event-types" />
       event = stripe.webhooks.constructEvent(
         req.rawBody, 
         req.headers['stripe-signature'] || "", 

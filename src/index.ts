@@ -28,7 +28,9 @@ app.use(express.json({ limit: '30mb', verify: (req, res, buf) => {
 app.use(helmet());
 app.use(helmet.crossOriginResourcePolicy({ policy: 'cross-origin' }));
 app.use(morgan('common'))
-app.use(cors());
+app.use(cors({
+    origin: ["https://app.moirai.nz"]
+}));
 
 app.use('/', await router({
     directory: path.join(__dirname, 'routes')
