@@ -26,7 +26,7 @@ app.use(express.json({ limit: '30mb', verify: (req, res, buf) => {
 }}));
 
 app.use(helmet());
-app.use(helmet.crossOriginResourcePolicy({ policy: 'cross-origin' }));
+app.use(helmet.crossOriginResourcePolicy({ policy: 'same-site' }));
 app.use(morgan('common'))
 app.use(cors({
     origin: ["https://app.moirai.nz"]
