@@ -5,9 +5,9 @@
   "type": "module",
   "main": "dist/index.js",
   "scripts": {
-    "prisma": "npx prisma generate",
-    "build": "npm run prisma && rimraf dist && tsc",
-    "dev": "nodemon src/index.ts"
+    "build": "npx prisma generate",
+    "dev": "nodemon src/index.ts",
+    "prod": "tsx src/index.ts"
   },
   "author": "",
   "license": "ISC",

@@ -20,5 +20,5 @@
   },
 
   "include": ["src/**/*"],
-  "files": ["typings/express.d.ts"]
+  "files": ["typings/express.d.ts", "node_modules/stripe-event-types/index.d.ts"]
 }
